@@ -15,6 +15,13 @@ class GTNv1:
         self.root.title('Guess the number! (v1)')
         self.root.resizable(False, False)
 
+        self.selectedDiff = StringVar()
+        self.tries = StringVar()
+        self.rslt = StringVar()
+        self.selectedDiff.set('This is the selectedDiff')
+        self.tries.set('This is the tries Counter')
+        self.rslt.set('This is the rslt label')
+
         self.gui()
 
     def gui(self):
@@ -23,12 +30,14 @@ class GTNv1:
 
         nameLbl = Label(self.root, text='Enter your name:')
         diffLbl = Label(self.root, text='Difficulty:', anchor='e', width=14)
-
+        selectedDiffLbl = Label(self.root, textvariable=self.selectedDiff)
+        triesLbl = Label(self.root, textvariable=self.tries)
 
         easyBtn = Button(self.root, text='Easy(0~10)', state=NORMAL)
         mediumBtn = Button(self.root, text='Medium(0~100)', state=NORMAL)
         hardBtn = Button(self.root, text='Hard(0~500)', state=NORMAL)
         chkBtn = Button(self.root, text='Check', width=27)
+        rsltLbl = Label(self.root, textvariable=self.rslt)
 
 #       ===============================================================================================================
 
@@ -37,6 +46,9 @@ class GTNv1:
 
         nameLbl.grid(row=0, column=0)
         diffLbl.grid(row=1, column=0)
+        selectedDiffLbl.grid(row=3, column=0, columnspan=2)
+        triesLbl.grid(row=3, column=2, columnspan=2)
+        rsltLbl.grid(row=4, column=0, columnspan=4)
 
         easyBtn.grid(row=1, column=1)
         mediumBtn.grid(row=1, column=2)
