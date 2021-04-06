@@ -1,0 +1,11 @@
+{
+    "easyDifficulty": {
+        "person1": 8
+    },
+    "mediumDifficulty": {
+        "person2": 15
+    },
+    "hardDifficulty": {
+        "person3": 17
+    }
+}
