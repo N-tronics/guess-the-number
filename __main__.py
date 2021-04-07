@@ -24,16 +24,17 @@ class GTNv1:
         self._root.resizable(False, False)
 
         self._selectedDiff.set('Difficulty:')
-        self._tries.set('Tries:')
+        self._tries.set('Tries: 0')
         jsonFile = 'guess the number/high-scores.json'
 
-        self.btns = btnFuncs.funcs(jsonFile, self)
+        self.btns = btnFuncs.funcs(self, jsonFile)
         self.ui()
         self.btns.showHighScorers()
 
     def ui(self):
         self.name = Entry(self._root, relief=RIDGE, borderwidth=5, width=42, bg='grey', fg='white')
         self.numIn = Entry(self._root, relief=RIDGE, borderwidth=5, width=25, bg='grey', fg='white')
+        self.numIn.bind('<Return>', self.btns.verify)
 
         nameLbl = Label(self._root, text='Enter your name:')
         diffLbl = Label(self._root, text='Difficulty:', anchor='e', width=14)
@@ -43,9 +44,9 @@ class GTNv1:
         self.easyBtn = Button(self._root, text='Easy(0~10)', state=NORMAL, command=lambda: self.btns.setRandomNumber('e'))
         self.mediumBtn = Button(self._root, text='Medium(0~100)', state=NORMAL, command=lambda: self.btns.setRandomNumber('m'))
         self.hardBtn = Button(self._root, text='Hard(0~500)', state=NORMAL, command=lambda: self.btns.setRandomNumber('h'))
-        chkBtn = Button(self._root, text='Check', width=27)
+        chkBtn = Button(self._root, text='Check', width=27, command=lambda: self.btns.verify())
         changeDiff = Button(self._root, text='Change Difficulty', command=lambda: self.btns.changeDiff())
-        clsHS = Button(self._root, text='Clear High Scores')
+        clsHS = Button(self._root, text='Clear High Scores', command=lambda: self.btns.launchClearHS())
 
         rsltLbl = Label(self._root, textvariable=self._rslt)
         table_highScores = Label(self._root, text='High Scores:-', width=27, anchor='w')
@@ -106,6 +107,12 @@ class GTNv1:
 
     def rootActivate(self):
         self._root.mainloop()
+
+    def getName(self):
+        return self.name.get()
+
+    def getNum(self):
+        return self.numIn.get()
 
 
 gtnv1 = GTNv1()

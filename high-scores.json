@@ -1,11 +1,11 @@
 {
     "easyDifficulty": {
-        "person1": 8
+        "None": null
     },
     "mediumDifficulty": {
-        "person2": 15
+        "None": null
     },
     "hardDifficulty": {
-        "person3": 17
+        "None": null
     }
 }
