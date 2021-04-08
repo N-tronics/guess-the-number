@@ -33,6 +33,10 @@ class GTNv1:
         self.btns.showHighScorers()
 
     def ui(self):
+        """
+        Generates the UI in the window.\n
+        :return: None
+        """
         self.name = Entry(self._root, relief=RIDGE, borderwidth=5, width=42, bg='grey', fg='white')
         self.numIn = Entry(self._root, relief=RIDGE, borderwidth=5, width=25, bg='grey', fg='white')
         self.numIn.bind('<Return>', self.btns.verify)
@@ -97,25 +101,49 @@ class GTNv1:
         clsHS.grid(row=9, column=2, columnspan=2, pady=10)
 
     def disableButtons(self):
+        """
+        Disables the difficulty buttons.\n
+        :return: None
+        """
         self.easyBtn['state'] = DISABLED
         self.mediumBtn['state'] = DISABLED
         self.hardBtn['state'] = DISABLED
 
     def enableButtons(self):
+        """
+        Enables the difficulty buttons.\n
+        :return: None
+        """
         self.easyBtn['state'] = NORMAL
         self.mediumBtn['state'] = NORMAL
         self.hardBtn['state'] = NORMAL
 
     def clearNumEntry(self):
+        """
+        Clears the num entry.\n
+        :return: None
+        """
         self.numIn.delete(0, END)
 
     def rootActivate(self):
+        """
+        Keeps the main window in a loop.\n
+        :return: None
+        """
         self._root.mainloop()
 
     def getName(self):
+        """
+        Returns the user's name.\n
+        :return: str
+        """
         return self.name.get()
 
     def getNum(self):
+        """
+        Returns the user's guess.\n
+        :return: int
+        """
         return self.numIn.get()
 
 

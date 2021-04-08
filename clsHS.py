@@ -17,6 +17,10 @@ class Clear:
         self.ui()
 
     def ui(self):
+        """
+        Generates the UI for entering the password.\n
+        :return: None
+        """
         pwdLbl = Label(self.clsWin, text='Password:')
         self.pwd = Entry(self.clsWin, borderwidth=5, relief=RIDGE, width=40)
         self.pwd.bind('<Return>', self.chkPwd)
@@ -27,6 +31,11 @@ class Clear:
         self.pwd.grid(row=0, column=1)
 
     def chkPwd(self, *args):
+        """
+        Checks the password.\n
+        :param args: event
+        :return: None
+        """
         if self.pwd.get() == self.correctPwd:
             self.clsWin.destroy()
             self.funcs.clsHs()
@@ -35,4 +44,8 @@ class Clear:
             self.clsWin.destroy()
 
     def winActivate(self):
+        """
+        Keeps the password UI in a loop.\n
+        :return: None
+        """
         self.clsWin.mainloop()

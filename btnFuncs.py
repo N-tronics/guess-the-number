@@ -20,6 +20,10 @@ class Funcs:
         self.findHighScorers()
 
     def findHighScorers(self):
+        """
+        Finds the high scorers in each difficulty as a dict.\n
+        :return: dict
+        """
         with open(self._jsonFile) as f:
             self._scores = json.load(f)
 
@@ -34,6 +38,10 @@ class Funcs:
         return {easyHighScorer: eTries, mediumHighScorer: mTries, hardHighScorer: hTries}
 
     def showHighScorers(self):
+        """
+        Finds and displays the high scorers in the main UI window.\n
+        :return: None
+        """
         self.findHighScorers()
         self.main._ezyHS.set(list(self._scores['easyDifficulty'].keys()))
         self.main._medHS.set(list(self._scores['mediumDifficulty'].keys()))
@@ -44,6 +52,12 @@ class Funcs:
         self.main._hTries.set(list(self._scores['hardDifficulty'].values()))
 
     def writeHighScorers(self, diff, score):
+        """
+        Writes to the json file in the difficulty and a dict of scorer and tries.\n
+        :param diff: str\n
+        :param score: dict = {scorer: tries}\n
+        :return: None
+        """
         with open(self._jsonFile) as f:
             storedData = json.load(f)
 
@@ -55,6 +69,10 @@ class Funcs:
         self.showHighScorers()
 
     def changeDiff(self):
+        """
+        Changes the set difficulty.\n
+        :return: None
+        """
         if self._diff != 'not set':
             response = messagebox.askokcancel('Do you want to continue?',
                                               'Proceeding will reset your tries and you will have to start over.')
@@ -67,6 +85,11 @@ class Funcs:
             return
 
     def setRandomNumber(self, diff):
+        """
+        Sets a random number based on the given difficulty.\n
+        :param diff: str\n
+        :return: None
+        """
         self.main.tries = 0
         self.main.disableButtons()
 
@@ -87,6 +110,11 @@ class Funcs:
             # print(self.main.randint)
 
     def verify(self, *args):
+        """
+        Verifies the user's guess.\n
+        :param args: event\n
+        :return: None
+        """
         num = self.main.getNum()
         name = self.main.getName()
 
@@ -110,6 +138,12 @@ class Funcs:
             self.main._result.set('Please enter your name.')
 
     def evalEntry(self, num, name):
+        """
+        Evaluates the user guess.\n
+        :param num: int\n
+        :param name: name of user\n
+        :return: None
+        """
         hints = ['Too low, try again!', 'Too high, try again!', 'Almost there, try higher!', 'Almost there, try lower!']
         compliments = ['Great!', 'Awesome!', 'Superb!', 'Bravo!', 'Wow!', 'Amazing!']
 
@@ -147,10 +181,18 @@ class Funcs:
             self.showHighScorers()
 
     def launchClearHS(self):
+        """
+        Launches the clear window.\n
+        :return: None
+        """
         clsWindow = clsHS.Clear(self)
         clsWindow.winActivate()
 
     def clsHs(self):
+        """
+        Clears the high scores\n
+        :return:
+        """
         for diff in self._difficulties:
             self.writeHighScorers(diff, {'None': None})
         self._clearHighScores = False
@@ -159,6 +201,10 @@ class Funcs:
         self.reset()
 
     def reset(self):
+        """
+        Resets the UI.\n
+        :return: None
+        """
         self._tries = 0
         self.main._tries.set('Tries: ' + str(self._tries))
         self.main._selectedDiff.set('Difficulty:')
