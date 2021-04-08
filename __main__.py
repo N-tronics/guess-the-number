@@ -1,17 +1,18 @@
-'''
+"""
 GUI Guess the number V1
 Nischay Bharadwaj
 03-04-2021
-'''
+"""
 
 import btnFuncs
-from tkinter import * 
+from tkinter import *
+
 
 class GTNv1:
     _root = Tk()
     _selectedDiff = StringVar()
     _tries = StringVar()
-    _rslt = StringVar()
+    _result = StringVar()
     _ezyHS = StringVar()
     _medHS = StringVar()
     _hardHS = StringVar()
@@ -19,15 +20,15 @@ class GTNv1:
     _mTries = StringVar()
     _hTries = StringVar()
 
-    def initGUI(self):
+    def __init__(self):
+        jsonFile = '/home/nischay/documents/py/guess-the-number/guess the number/high-scores.json'
+        self.btns = btnFuncs.Funcs(self, jsonFile)
         self._root.title('Guess the number! (v1)')
         self._root.resizable(False, False)
 
         self._selectedDiff.set('Difficulty:')
         self._tries.set('Tries: 0')
-        jsonFile = 'guess the number/high-scores.json'
 
-        self.btns = btnFuncs.funcs(self, jsonFile)
         self.ui()
         self.btns.showHighScorers()
 
@@ -41,14 +42,17 @@ class GTNv1:
         selectedDiffLbl = Label(self._root, textvariable=self._selectedDiff)
         triesLbl = Label(self._root, textvariable=self._tries)
 
-        self.easyBtn = Button(self._root, text='Easy(0~10)', state=NORMAL, command=lambda: self.btns.setRandomNumber('e'))
-        self.mediumBtn = Button(self._root, text='Medium(0~100)', state=NORMAL, command=lambda: self.btns.setRandomNumber('m'))
-        self.hardBtn = Button(self._root, text='Hard(0~500)', state=NORMAL, command=lambda: self.btns.setRandomNumber('h'))
+        self.easyBtn = Button(self._root, text='Easy(0~10)', state=NORMAL,
+                              command=lambda: self.btns.setRandomNumber('e'))
+        self.mediumBtn = Button(self._root, text='Medium(0~100)', state=NORMAL,
+                                command=lambda: self.btns.setRandomNumber('m'))
+        self.hardBtn = Button(self._root, text='Hard(0~500)', state=NORMAL,
+                              command=lambda: self.btns.setRandomNumber('h'))
         chkBtn = Button(self._root, text='Check', width=27, command=lambda: self.btns.verify())
         changeDiff = Button(self._root, text='Change Difficulty', command=lambda: self.btns.changeDiff())
         clsHS = Button(self._root, text='Clear High Scores', command=lambda: self.btns.launchClearHS())
 
-        rsltLbl = Label(self._root, textvariable=self._rslt)
+        resultLbl = Label(self._root, textvariable=self._result)
         table_highScores = Label(self._root, text='High Scores:-', width=27, anchor='w')
         table_highScoresLbl = Label(self._root, text='High Scorer')
         table_triesLbl = Label(self._root, text='Tries')
@@ -62,7 +66,7 @@ class GTNv1:
         table_medTries = Label(self._root, textvariable=self._mTries)
         table_hardTries = Label(self._root, textvariable=self._hTries)
 
-#       ===============================================================================================================
+        #       ===============================================================================================================
 
         self.name.grid(row=0, column=1, columnspan=3)
         self.numIn.grid(row=2, column=0, columnspan=2)
@@ -71,7 +75,7 @@ class GTNv1:
         diffLbl.grid(row=1, column=0)
         selectedDiffLbl.grid(row=3, column=0, columnspan=2)
         triesLbl.grid(row=3, column=2, columnspan=2)
-        rsltLbl.grid(row=4, column=0, columnspan=4)
+        resultLbl.grid(row=4, column=0, columnspan=4)
         table_highScores.grid(row=5, column=0, columnspan=2)
         table_highScoresLbl.grid(row=5, column=2)
         table_triesLbl.grid(row=5, column=3)
@@ -92,12 +96,12 @@ class GTNv1:
         changeDiff.grid(row=9, column=0, columnspan=2, pady=10)
         clsHS.grid(row=9, column=2, columnspan=2, pady=10)
 
-    def disableBtns(self):
+    def disableButtons(self):
         self.easyBtn['state'] = DISABLED
         self.mediumBtn['state'] = DISABLED
         self.hardBtn['state'] = DISABLED
 
-    def enableBtns(self):
+    def enableButtons(self):
         self.easyBtn['state'] = NORMAL
         self.mediumBtn['state'] = NORMAL
         self.hardBtn['state'] = NORMAL
@@ -116,5 +120,4 @@ class GTNv1:
 
 
 gtnv1 = GTNv1()
-gtnv1.initGUI()
 gtnv1.rootActivate()

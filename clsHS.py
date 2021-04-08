@@ -1,9 +1,10 @@
-'''
+"""
 Launches a window to clear the high scores.
-'''
+"""
 
 from tkinter import *
 from tkinter import messagebox
+
 
 class Clear:
     def __init__(self, funcs):
@@ -20,7 +21,7 @@ class Clear:
         self.pwd = Entry(self.clsWin, borderwidth=5, relief=RIDGE, width=40)
         self.pwd.bind('<Return>', self.chkPwd)
 
-#       ========================================================================================
+        #       ========================================================================================
 
         pwdLbl.grid(row=0, column=0),
         self.pwd.grid(row=0, column=1)

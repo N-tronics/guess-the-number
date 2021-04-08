@@ -1,15 +1,14 @@
-'''
+"""
 Provides functionality to btns in the __main__.py file.
-'''
+"""
 
 import json
-import __main__
 import clsHS
 from random import randint
-from tkinter import *
 from tkinter import messagebox
 
-class funcs:
+
+class Funcs:
 
     def __init__(self, ui, file='guess the number/high-scores.json'):
         self.main = ui
@@ -32,7 +31,7 @@ class funcs:
         mTries = self._scores['mediumDifficulty'][mediumHighScorer]
         hTries = self._scores['hardDifficulty'][hardHighScorer]
 
-        return {easyHighScorer:eTries, mediumHighScorer:mTries, hardHighScorer:hTries}
+        return {easyHighScorer: eTries, mediumHighScorer: mTries, hardHighScorer: hTries}
 
     def showHighScorers(self):
         self.findHighScorers()
@@ -58,16 +57,10 @@ class funcs:
     def changeDiff(self):
         if self._diff != 'not set':
             response = messagebox.askokcancel('Do you want to continue?',
-                                            'Proceeding will reset your tries and you will have to start over.')
+                                              'Proceeding will reset your tries and you will have to start over.')
 
             if response:
-                self._diff = 'not set'
-                self._tries = 0
-                self.main._tries.set('Tries:' + str(self._tries))
-                self.main._selectedDiff.set('Difficulty: ')
-                self.main.clearNumEntry()
-                self.main.enableBtns()
-                self.main._rslt.set('')
+                self.reset()
             else:
                 return
         else:
@@ -75,23 +68,23 @@ class funcs:
 
     def setRandomNumber(self, diff):
         self.main.tries = 0
-        self.main.disableBtns()
+        self.main.disableButtons()
 
         if diff == 'e':
             self._diff = 'easyDifficulty'
             self._randomInt = randint(0, 10)
             self.main._selectedDiff.set('Difficulty: Easy')
-            #print(self.main.randint)
+            # print(self.main.randint)
         elif diff == 'm':
             self._diff = 'mediumDifficulty'
             self._randomInt = randint(0, 100)
             self.main._selectedDiff.set('Difficulty: Medium')
-            #print(self.main.randint)
+            # print(self.main.randint)
         else:
             self._diff = 'hardDifficulty'
             self._randomInt = randint(0, 500)
             self.main._selectedDiff.set('Difficulty: Hard')
-            #print(self.main.randint)
+            # print(self.main.randint)
 
     def verify(self, *args):
         num = self.main.getNum()
@@ -107,14 +100,14 @@ class funcs:
                         self.evalEntry(num, name)
                         self.main.clearNumEntry()
                     except ValueError:
-                        self.main._rslt.set('Please enter a number.')
+                        self.main._result.set('Please enter a number.')
                         self.main.clearNumEntry()
                 else:
-                    self.main._rslt.set('Please enter a number.')
+                    self.main._result.set('Please enter a number.')
             else:
-                self.main._rslt.set('Please select a difficulty.')
+                self.main._result.set('Please select a difficulty.')
         else:
-            self.main._rslt.set('Please enter your name.')
+            self.main._result.set('Please enter your name.')
 
     def evalEntry(self, num, name):
         hints = ['Too low, try again!', 'Too high, try again!', 'Almost there, try higher!', 'Almost there, try lower!']
@@ -123,20 +116,20 @@ class funcs:
         if num < self._randomInt:
             difference = abs(num - self._randomInt)
             if difference > 10:
-                self.main._rslt.set(hints[0])
+                self.main._result.set(hints[0])
             elif difference <= 10:
-                self.main._rslt.set(hints[2])
+                self.main._result.set(hints[2])
         elif num > self._randomInt:
             difference = abs(num - self._randomInt)
             if difference > 10:
-                self.main._rslt.set(hints[1])
+                self.main._result.set(hints[1])
             elif difference <= 10:
-                self.main._rslt.set(hints[3])
+                self.main._result.set(hints[3])
         else:
-            messagebox.showinfo(compliments[randint(0, 5)], 
+            messagebox.showinfo(compliments[randint(0, 5)],
                                 'You got it right in ' + str(self._tries) + ' tries!')
             self.main.clearNumEntry()
-            self.main.enableBtns()
+            self.main.enableButtons()
 
             if list(self._scores[self._diff].values())[0] is None:
                 self.writeHighScorers(self._diff, {name: self._tries})
@@ -150,6 +143,7 @@ class funcs:
                 self._diff = 'not set'
                 self.main._selectedDiff.set('Difficulty:')
 
+            self.reset()
             self.showHighScorers()
 
     def launchClearHS(self):
@@ -162,3 +156,12 @@ class funcs:
         self._clearHighScores = False
 
         self.showHighScorers()
+        self.reset()
+
+    def reset(self):
+        self._tries = 0
+        self.main._tries.set('Tries: ' + str(self._tries))
+        self.main._selectedDiff.set('Difficulty:')
+        self.main._result.set('')
+        self.main.clearNumEntry()
+        self.main.enableButtons()
